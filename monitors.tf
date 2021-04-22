@@ -1,6 +1,6 @@
 resource "datadog_monitor" "apm_service_high_error_rate" {
   for_each           = var.services
-  name               = "Service ${each.key} has a high error rate on ${each.value.environment}"
+  name               = "Service ${each.key} has a high error rate on ${each.value.environment} service"
   type               = "query alert"
   message            = "Service ${each.key} has a high error rate. @pagerduty-${each.key}"
   escalation_message = "Service ${each.key} has a high error rate!! @pagerduty-${each.key}"
