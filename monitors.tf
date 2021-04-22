@@ -5,7 +5,7 @@ resource "datadog_monitor" "apm_service_high_latency" {
   message            = "Service ${each.key} has a high latency. @pagerduty-${each.key}"
   escalation_message = "Service ${each.key} has a high latency @pagerduty-${each.key}"
 
-  query = "avg(last_10m):avg:trace.aws.sns{env:none,service:sns} > ${each.value.high_error_rate_critical}"
+  query = "avg(last_10m):avg:trace.aws.${each.key}{env:${each.value.environment},service:${each.key}} > ${each.value.high_error_rate_critical}"
   thresholds = {
     warning  = each.value.high_error_rate_warning
     critical = each.value.high_error_rate_critical
