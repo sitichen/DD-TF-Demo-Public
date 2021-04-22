@@ -1,5 +1,16 @@
 application = "eCommerce"
 services = {
+   sns = {
+    pd_service_key            = "54321098765432109875"
+    environment               = "none"
+    framework                 = "aws"
+    high_error_rate_critical  = 0.5
+    high_error_rate_warning   = 0.3
+    high_avg_latency_critical = 3
+    high_avg_latency_warning  = 1
+    high_p90_latency_critical = 4
+    high_p90_latency_warning  = 3
+  }  
   store-frontend = {
     pd_service_key            = "54321098765432109876"
     environment               = "ruby-shop"
