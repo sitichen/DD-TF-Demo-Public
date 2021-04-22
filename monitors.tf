@@ -1,11 +1,11 @@
 resource "datadog_monitor" "apm_service_high_latency" {
   for_each           = var.services
-  name               = "Service ${each.key} has a high latency on ${each.value.environment} service"
+  name               = "Service ${each.key} has a high latency on ${each.value.environment}"
   type               = "query alert"
   message            = "Service ${each.key} has a high latency. @pagerduty-${each.key}"
   escalation_message = "Service ${each.key} has a high latency @pagerduty-${each.key}"
 
-  query = "avg(last_10m):(sum:trace.${each.value.framework}.${each.key}{env:${each.value.environment},service:${each.key} } ) > ${each.value.high_error_rate_critical}"
+  query = "avg(last_10m):avg:trace.aws.sns{env:none,service:sns} > 0.5"
   thresholds = {
     warning  = each.value.high_error_rate_warning
     critical = each.value.high_error_rate_critical
@@ -23,7 +23,7 @@ resource "datadog_monitor" "apm_service_high_latency" {
 
 resource "datadog_monitor" "apm_service_high_error_rate" {
   for_each           = var.services
-  name               = "Service ${each.key} has a high error rate on ${each.value.environment} service"
+  name               = "Service ${each.key} has a high error rate on ${each.value.environment}"
   type               = "query alert"
   message            = "Service ${each.key} has a high error rate. @pagerduty-${each.key}"
   escalation_message = "Service ${each.key} has a high error rate!! @pagerduty-${each.key}"
